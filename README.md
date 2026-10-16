@@ -1,0 +1,45 @@
+# 超级碗营养计算器 1.0.0
+
+CnH2n_6策划，Codex 辅助开发。
+
+非官方营养计算工具，适用于超级碗现行菜单的热量及营养素估算。纯静态网站，无需安装依赖或构建。
+
+## 文件
+
+- index.html：页面入口
+- assets/styles.css：样式（字体路径相对于此文件）
+- assets/app.js：食物数据及交互逻辑
+- assets/fonts/SourceHanSansCN-Regular.otf：未修改的思源黑体
+- assets/fonts/OFL.txt：字体版权声明与许可证
+- .nojekyll：关闭 GitHub Pages 的 Jekyll 处理
+
+所有页面运行资源都使用相对路径，可部署到域名根目录或仓库子路径。关于页面中的外部资料链接保留原网址，它们不是运行资源。
+
+## GitHub Pages 发布
+
+1. 创建 Public 仓库，例如 foodbowl-calculator，并初始化 README。
+2. 在仓库 Code 页面选择 Add file → Upload files。
+3. 上传本文件夹里面的全部内容，保留 assets 结构；不要上传外层文件夹或 ZIP 本身。index.html 必须在仓库根目录。
+4. 提交后进入 Settings → Pages。
+5. Source 选择 Deploy from a branch；Branch 选择 main，目录选择 / (root)，保存。
+6. 等待 Pages 部署成功，使用页面给出的访问地址，通常为 https://用户名.github.io/仓库名/。
+
+官方文档：https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site
+
+如果网页上传遗漏 .nojekyll，可用 Add file → Create new file 创建该文件，并写入一行注释后提交。
+
+## 数据与许可证
+
+菜单数据来源：小红书 @超级碗FOODBOWL，由用户整理提供。注明来源不代表品牌授权。三明治热量来自官方，但缺少碳蛋脂数据。
+
+鸡腿肉估算参考：USDA FoodData Central，FDC 172388，经 https://whatyoueat.io/foods/172388 查阅。USDA 数据采用 CC0 1.0。
+
+字体依 SIL Open Font License 1.1 分发，完整声明见 assets/fonts/OFL.txt，同时保留在页面内。字体许可证不覆盖品牌、菜单数据或工具代码。本包尚未另行指定代码开源许可证；公开仓库不等于自动授予开源许可。
+
+## 本地记录
+
+记录保存在浏览器 localStorage。文件版与 GitHub Pages 的记录不会自动同步；迁移前导出 JSON 备份，再到网站导入。不要将个人备份上传到公开仓库。
+
+## 验证范围
+
+已检查 JavaScript 语法、资源引用、字体字节一致性及既有计算/记录逻辑。尚未完成真实浏览器视觉与上线验证。

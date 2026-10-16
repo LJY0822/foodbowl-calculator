@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>超级碗 · 营养计算器 1.0.0</title><link rel="stylesheet" href="./assets/styles.css"></head><body><header><small>FOODBOWL / DAILY NUTRITION</small><h1>超级碗 · 营养计算器</h1><p class="muted">非官方营养计算工具，适用于超级碗现行菜单的热量及营养素估算</p><button class="about-link" id="about-open">关于本工具</button></header><main><div class="top"><label for="title">本次记录</label><input id="title" placeholder="例：X月X日午饭" maxlength="100"><button id="new">新建记录</button><button id="clear">清空本次食物</button><button id="goal-open">本次目标</button></div><div class="layout"><section class="panel"><h2>选择食物 <small id="count"></small></h2><input id="search" class="search" placeholder="搜索食物名称" aria-label="搜索食物"><div class="filters" id="filters"></div><small>碳水、膳食纤维每次增减半份，其他分类每次一份。</small><div id="foods" tabindex="0" aria-label="当前分类食物列表"></div></section><aside class="panel summary"><h2>本次营养合计</h2><div class="total"><span id="kcal">0</span> <small>kcal</small></div><p id="goal-energy-note" class="muted"></p><div class="macros" id="macros"></div><div id="goal-macro-notes" class="goal-notes"></div><p id="missing" class="warning"></p><details open><summary>已选食物与份量</summary><div id="selection"></div></details><div class="toolbar favorite-toolbar"><button id="favorite">保存为常用搭配</button></div><label for="output">复制文本预览</label><textarea id="output" class="output" readonly></textarea><button class="primary wide" id="copy">复制食物与营养合计</button><div id="status" role="status" aria-live="polite"></div><small id="save-state">修改后自动保存到当前浏览器。</small><details><summary>数据与计算说明</summary><p>旧菜谱项目不再出现在选择列表，历史记录仍可查阅。所有营养数值按原表保留，不从三大营养素重算热量。膳食纤维分类是食物类别，未提供纤维克数。</p><p>按重量计算时，按实际克重 ÷ 标准克重缩放全部营养素。按份数添加到实称项目时，会增加相应标准重量并保留实称模式。同种食物合并累计。</p><p>“需核对”表示 4×蛋白质＋4×碳水＋9×脂肪与原表热量相差超过 5 kcal，仅作提示，不能直接认定原表错误。沙拉不含酱、鲜蔬锅不含汤，请按实际另加。</p></details></aside></div><section class="panel library"><h2>本地记录与常用搭配</h2><div class="toolbar"><button class="active" id="history-tab">历史记录</button><button id="favorite-tab">常用搭配</button><button id="export">导出全部备份</button><button id="import">导入备份</button><input hidden type="file" id="file" accept="application/json,.json"></div><div id="library"></div><small>当前记录持续自动保存；“新建记录”会保留上一条。备份导入会合并，不覆盖已有记录。</small></section><footer>本地离线工具 · 记录存储于当前浏览器，清理浏览器数据可能导致丢失，请定期导出备份<div class="credits">CnH2n_6策划，Codex 辅助开发 · 1.0.0</div></footer></main><div class="float-summary" role="status" aria-live="polite"><div>本次合计 · <strong id="float-kcal">0</strong> kcal</div><div id="float-macros"></div><div id="float-goal-note" class="muted"></div><div id="float-macro-notes" class="goal-notes"></div><div class="warning" id="float-note"></div></div><dialog id="goal-dialog" aria-labelledby="goal-heading"><h2 id="goal-heading">本次目标</h2><p class="muted">目标用于本餐规划。颜色只表示与本次目标的比例，不是健康评分。</p><form id="goal-form"><div class="goal-field"><label for="goal-kcal">热量目标 <strong id="goal-kcal-value">500 kcal</strong></label><input id="goal-kcal" type="range" min="0" max="100" step="1" value="50"><div class="range-axis"><span>300 kcal</span><span>500 kcal</span><span>1500 kcal</span></div></div><p class="muted">蛋白质、碳水、脂肪区间按克数设置，默认不启用。</p><div id="goal-ranges"></div><details><summary>按体重估算营养目标，适用于所有人吗？</summary><p>不是通用公式。经常运动或训练的成年人，蛋白质常见参考为每天每公斤体重约1.2～2.0g；例如60kg对应全天72～120g，并非每餐要求，也不能直接当成每个人减脂或增肌的处方。</p><p>碳水、脂肪取决于全天能量、训练量与个人需求，不宜仅按体重的固定倍数代填。本工具不自动分配单餐营养目标。肾脏疾病等需要特殊饮食管理的情况，应使用专业人员给出的目标。</p><p><a href="https://ods.od.nih.gov/factsheets/ExerciseAndAthleticPerformance-HealthProfessional/" target="_blank" rel="noopener">NIH ODS：运动与营养参考</a> · <a href="https://www.niddk.nih.gov/health-information/kidney-disease/chronic-kidney-disease-ckd/healthy-eating-adults-chronic-kidney-disease" target="_blank" rel="noopener">NIDDK：肾脏疾病饮食</a></p></details><details><summary>加总热量颜色代表了什么？</summary><p class="muted">低于70%灰色；70%～不足90%黄绿色；90%～110%翠绿色；超过110%～120%橙色；超过120%红色。</p><p class="muted">颜色仅表示与本次目标的比例，不是健康评分。</p></details><div class="close-row"><button type="button" id="goal-cancel">取消</button> <button type="submit" class="primary">保存目标</button></div></form></dialog><dialog id="about"><h2>关于本工具</h2><p class="muted">版本 1.0.0</p><p>非官方营养计算工具，适用于超级碗现行菜单的热量及营养素估算</p><h3>菜单数据来源</h3><p>小红书 @超级碗FOODBOWL</p><p>菜单热量及已提供的营养素依据官方公示，由用户整理提供。三明治热量同样来源于官方，官方暂未提供其碳水、蛋白质及脂肪数据。</p><h3>估算数据来源</h3><p>USDA FoodData Central，经 whatyoueat.io 查阅。鸡腿肉参考条目：FDC 172388；数据采用 CC0 1.0。香草烤鸡为参考食材估算，并非门店官方营养数据。</p><p><a href="https://whatyoueat.io/foods/172388" target="_blank" rel="noopener">whatyoueat.io · 去皮烤熟鸡腿肉</a></p><p>该来源收录 USDA FoodData Central 数据，用于香草烤鸡的通用食材估算。香草烤鸡缺少官方数据，实际门店烹饪、调味及用油可能产生差异。</p><h3>计算说明</h3><p>已提供的数值按份数或实际克重同比例计算。缺失营养素不视为零，合计会提示仅包含已知部分。原表热量与碳蛋脂折算存在差值时，仍按官方公示数值计算。</p><p>本工具默认单餐热量目标为500kcal，可点击【本次目标】按钮进行详细设置。</p><h3>字体与许可证</h3><p>本工具内嵌未修改的思源黑体（Source Han Sans CN），字体版权归 Adobe 所有，依 SIL Open Font License 1.1 使用及分发。该许可证仅适用于字体，不自动适用于本工具代码、品牌或菜单数据。</p><details><summary>查看字体版权声明及完整 OFL 许可证</summary><pre class="font-license">Copyright 2014-2025 Adobe (http://www.adobe.com/), with Reserved Font
+Name 'Source'. Source is a trademark of Adobe in the United States
+and/or other countries.
+
+This Font Software is licensed under the SIL Open Font License,
+Version 1.1.
+
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+
+-----------------------------------------------------------
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+-----------------------------------------------------------
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font
+creation efforts of academic and linguistic communities, and to
+provide a free and open framework in which fonts may be shared and
+improved in partnership with others.
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded,
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply to
+any document created using the fonts or their derivatives.
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software
+components as distributed by the Copyright Holder(s).
+"Modified Version" refers to any derivative made by adding to,
+deleting, or substituting -- in part or in whole -- any of the
+components of the Original Version, by changing formats or by porting
+the Font Software to a new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+PERMISSION &amp; CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed,
+modify, redistribute, and sell modified and unmodified copies of the
+Font Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components, in
+Original or Modified Versions, may be sold by itself.
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the
+corresponding Copyright Holder. This restriction only applies to the
+primary font name as presented to the users.
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created using
+the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+</pre></details><div class="close-row"><button id="about-close">关闭</button></div></dialog><script src="./assets/app.js" defer></script></body></html>
